@@ -16,6 +16,7 @@
                 <th class="p-3">Model</th>
                 <th class="p-3">Warranty</th>
                 <th class="p-3">Purchased</th>
+                <th class="p-3">Interval (months)</th>
                 <th class="p-3">Next Service</th>
                 <th class="p-3">Location</th>
             </tr>
@@ -31,6 +32,9 @@
                     <td class="p-3">{{ $ua->modelEntry->name }}</td>
                     <td class="p-3">{{ $ua->warranty->label }}</td>
                     <td class="p-3">{{ $ua->purchase_date }}</td>
+                    <td class="p-3">
+                        {{ $ua->service_interval_months ?? '—' }} months
+                    </td>
                     <td class="p-3">{{ $ua->next_service_date ?? '—' }}</td>
                     <td class="p-3">{{ $ua->location ?? '—' }}</td>
                 </tr>

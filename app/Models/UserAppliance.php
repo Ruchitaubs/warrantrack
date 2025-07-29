@@ -19,6 +19,7 @@ class UserAppliance extends Model
         'warranty_id',
         'purchase_date',
         'next_service_date',
+        'service_interval_months', 
         'location',
     ];
 

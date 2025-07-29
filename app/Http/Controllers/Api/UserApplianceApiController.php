@@ -46,6 +46,7 @@ class UserApplianceApiController extends Controller
             'model_entry_id'    => 'required|exists:model_entries,id',
             'warranty_id'       => 'required|exists:warranties,id',
             'purchase_date'     => 'required|date',
+             'service_interval_months'=> 'nullable|in:3,6,12',    // only those options
             'next_service_date' => 'nullable|date',
             'location'          => 'nullable|string|max:255',
         ]);
