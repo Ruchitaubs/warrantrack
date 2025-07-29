@@ -15,7 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+Route::get('admin', function () {
+    return redirect()->route('admin.login');
+});
 
 // Login form
 Route::get('admin/login',  [AdminAuthController::class, 'showLoginForm'])
