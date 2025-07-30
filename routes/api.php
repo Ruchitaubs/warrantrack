@@ -11,12 +11,18 @@ use App\Http\Controllers\Api\{
     AuthController,
     DropdownController
 };
+use App\Http\Controllers\Api\DashboardController;
 
 // Public auth
 Route::post('register', [AuthController::class,'register']);
 Route::post('login',    [AuthController::class,'login']);
 
 Route::middleware('auth:sanctum')->group(function(){
+
+    Route::get('dashboard', [DashboardController::class, 'index'])
+     ->middleware('auth:sanctum');
+
+     
     // Mobile dropdowns & appliances
     Route::get('dropdowns/categories',     [DropdownController::class,'categories']);
     Route::get('dropdowns/item-types',     [DropdownController::class,'items']);
