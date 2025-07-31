@@ -24,10 +24,11 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
+                "code"=> 405,
                 'status'  => 'error',
                 'message' => 'Validation failed',
                 'errors'  => $validator->errors(),
-            ], 422);
+            ], 405);
         }
 
         // Create the user
@@ -41,10 +42,12 @@ class AuthController extends Controller
         $token = $user->createToken('mobile_token')->plainTextToken;
 
         return response()->json([
-            'status' => 'success',
+            "code"=> 200,
+            "status"=> "success",
+            "message"=> "Registration successful",
             'user'   => $user,
             'token'  => $token,
-        ], 201);
+        ], 200);
     }
 
 
@@ -59,26 +62,30 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
+                 "code"=> 405,
                 'status'  => 'error',
                 'message' => 'Validation failed',
                 'errors'  => $validator->errors(),
-            ], 422);
+            ], 405);
         }
 
         // Attempt to find the user and check password
         $user = User::where('email', $request->email)->first();
         if (! $user || ! Hash::check($request->password, $user->password)) {
             return response()->json([
+                 "code"=> 405,
                 'status'  => 'error',
                 'message' => 'Invalid credentials',
-            ], 401);
+            ], 405);
         }
 
         // Issue token
         $token = $user->createToken('mobile_token')->plainTextToken;
 
         return response()->json([
-            'status' => 'success',
+            "code"=> 200,
+            "status"=> "success",
+            "message"=> "Login successful",
             'user'   => $user,
             'token'  => $token,
         ]);
@@ -89,6 +96,8 @@ class AuthController extends Controller
     {
         $request->user()->tokens()->delete();
 
-        return response()->json(['message' => 'Logged out']);
+        return response()->json([
+            "code" => 200,
+    "message"=> "Logged out successfully" ]);
     }
 }

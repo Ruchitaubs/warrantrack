@@ -25,13 +25,20 @@ class UserApplianceApiController extends Controller
         // 2. If empty, return 404 with error message
         if ($list->isEmpty()) {
             return response()->json([
-                'status'  => 'error',
+                'code'   => 405,
+                 'status'  => 'error',
                 'message' => 'No appliances found for this user.',
-            ], 404);
+            ], 405);
         }
 
         // 3. Otherwise return success payload
-        return   $list;
+  
+        return response()->json([
+                'code'=> 200,
+                'status'  => 'success',
+                'message' => 'success',
+                'list' => $list
+            ], 200);
 
 
     }
@@ -53,10 +60,11 @@ class UserApplianceApiController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
+                 'code'   => 405,
                 'status'  => 'error',
                 'message' => 'Validation failed',
                 'errors'  => $validator->errors(),
-            ], 422);
+            ], 405);
         }
 
         // 2. Create the record
@@ -65,7 +73,12 @@ class UserApplianceApiController extends Controller
 
         $ua = UserAppliance::create($data);
 
-        // 3. Return success
-        return  $ua;
+        
+         return response()->json([
+                'code'=> 200,
+                'status'  => 'success',
+                'message' => 'success',
+                'user_appliance' => $ua
+            ], 200);
     }
 }

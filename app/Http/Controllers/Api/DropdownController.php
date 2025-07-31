@@ -20,13 +20,18 @@ class DropdownController extends Controller
 
         if ($categories->isEmpty()) {
             return response()->json([
+                'code'   => 405,
                 'status'  => 'error',
                 'message' => 'No categories found.',
             ], 404);
         }
-
-        return $categories;
-     
+ 
+        return response()->json([
+                'code'=> 200,
+                'status'  => 'success',
+                'message' => 'success',
+                'categories' => $categories
+            ], 200);
 
     }
 
@@ -40,10 +45,11 @@ class DropdownController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'status'  => 'error',
+                 'code'   => 405,
+                 'status'  => 'error',
                 'message' => 'Validation failed',
                 'errors'  => $validator->errors(),
-            ], 422);
+            ], 405);
         }
 
         $items = ItemType::where('category_id', $request->category_id)
@@ -52,15 +58,18 @@ class DropdownController extends Controller
 
         if ($items->isEmpty()) {
             return response()->json([
-                'status'  => 'error',
+                  'code'   => 405,
+                 'status'  => 'error',
                 'message' => 'No item types found for this category.',
-            ], 404);
+            ], 405);
         }
 
-
-        return  $items;
-
-        
+        return response()->json([
+                'code'=> 200,
+                'status'  => 'success',
+                'message' => 'success',
+                'items' => $items
+            ], 200);
     }
 
     // GET /api/dropdowns/brands?item_type_id=#
@@ -72,10 +81,11 @@ class DropdownController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'status'  => 'error',
+                  'code'   => 405,
+                 'status'  => 'error',
                 'message' => 'Validation failed',
                 'errors'  => $validator->errors(),
-            ], 422);
+            ], 405);
         }
         
          $brands = Brand::where('item_type_id', $request->item_type_id)
@@ -84,13 +94,18 @@ class DropdownController extends Controller
         // 3. If none found, return 404
         if ($brands->isEmpty()) {
             return response()->json([
-                'status'  => 'error',
+                 'code'   => 405,
+                 'status'  => 'error',
                 'message' => 'No brands found for the specified item type.',
-            ], 404);
+            ], 405);
         }
-
-        // 4. Otherwise return success and data
-        return   $brands ;
+ 
+         return response()->json([
+                'code'=> 200,
+                'status'  => 'success',
+                'message' => 'success',
+                'brands' => $brands
+            ], 200);
     }
 
     // GET /api/dropdowns/warranties?item_type_id=#
@@ -103,10 +118,11 @@ class DropdownController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'status'  => 'error',
+                 'code'   => 405,
+                 'status'  => 'error',
                 'message' => 'Validation failed',
                 'errors'  => $validator->errors(),
-            ], 422);
+            ], 405);
         }
 
         // 2. Fetch warranties for the given item type
@@ -116,12 +132,18 @@ class DropdownController extends Controller
         // 3. If none found, return 404
         if ($warranties->isEmpty()) {
             return response()->json([
-                'status'  => 'error',
+                'code'   => 405,
+                 'status'  => 'error',
                 'message' => 'No warranties found for the specified item type.',
-            ], 404);
+            ], 405);
         }
+  
+         return response()->json([
+                'code'=> 200,
+                'status'  => 'success',
+                'message' => 'success',
+                'warranties' => $warranties
+            ], 200);
 
-        // 4. Otherwise return success and data
-        return  $warranties ;
     }
 }

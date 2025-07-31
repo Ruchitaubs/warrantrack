@@ -49,15 +49,7 @@ class DashboardController extends Controller
                 'count' => $group->count(),
             ])->values();
 
-        // Build reminders for those due soon
-     /*   $reminders = $appliances
-            ->filter(fn($ua) => $ua->expiry->between($now, $now->copy()->addDays(15)))
-            ->map(fn($ua) => [
-                'message'    => "Extend warranty for {$ua->itemType->name}",
-                'expires_at' => $ua->expiry->toDateString(),
-            ])->values();
-*/
-
+       
         $reminders = $appliances
         ->filter(fn($ua) =>
             $ua->expiry->gte($now) &&
@@ -69,8 +61,13 @@ class DashboardController extends Controller
         ])
         ->values();
 
+ 
+
 
         return response()->json([
+            'code'=> 200,
+                'status'  => 'success',
+                'message' => 'success',
             'user' => [
                 'id'    => $user->id,
                 'name'  => $user->name,
