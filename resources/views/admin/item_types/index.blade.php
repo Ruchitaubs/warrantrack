@@ -33,9 +33,10 @@
                     <td class="p-3">{{ $loop->iteration }}</td>
                     <td class="p-3">{{ $it->name }}</td>
                     <td class="p-3">
-                        @if($it->icon_path)
-                            <img src="{{ asset($it->icon_path) }}" alt="icon" class="h-6 w-6 rounded">
-                        @else
+                       @if($it->icon_path)
+                            <img src="{{ url($it->icon_path) }}" alt="icon" class="h-6 w-6 rounded">
+                            
+                          @else
                             <div class="h-6 w-6 bg-gray-200 rounded flex items-center justify-center text-xs text-gray-500">
                                 N/A
                             </div>

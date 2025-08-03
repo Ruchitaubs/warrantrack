@@ -91,13 +91,25 @@ class ItemTypeController extends Controller
             ->with('success', 'Item Type deleted successfully.');
     }
 
-
     protected function saveIcon(?UploadedFile $file): ?string
     {
-        if (! $file) return null;
-        $filename = 'item-type-icons/' . Str::uuid() . '.' . $file->getClientOriginalExtension();
-        // store in storage/app/public/item-type-icons/
-        Storage::disk('public')->putFileAs('item-type-icons', $file, basename($filename));
-        return 'storage/' . $filename; // public URL assuming storage:link created
+        
+         if (! $file) {
+        return null;
+        }
+
+        // Build destination inside public_html/public/storage/app/public/item-type-icons
+        $directory = public_path('storage/app/public/item-type-icons');
+        if (! is_dir($directory)) {
+            mkdir($directory, 0755, true);
+        }
+    
+        $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
+        $file->move($directory, $filename);
+    
+        // Return the stored relative path for use in <img src="...">
+        // e.g., "storage/app/public/item-type-icons/uuid.png"
+        return "storage/app/public/item-type-icons/{$filename}";
+     
     }
 }

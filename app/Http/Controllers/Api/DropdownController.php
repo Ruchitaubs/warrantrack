@@ -51,7 +51,7 @@ class DropdownController extends Controller
         }
 
         $items = ItemType::where('category_id', $request->category_id)
-                         ->get(['id', 'name']);
+                         ->get(['id', 'name' , 'icon_path']);
 
         if ($items->isEmpty()) {
             return response()->json([
