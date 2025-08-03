@@ -58,6 +58,7 @@ class DashboardController extends Controller
             $ua->expiry->lte($now->copy()->addDays(15))
         )
         ->map(fn($ua) => [
+            'id'       => $ua->id, 
             'message'    => "Extend warranty for {$ua->itemType->name}",
             'due_at'     => $ua->expiry->toDateString(),
         ])
