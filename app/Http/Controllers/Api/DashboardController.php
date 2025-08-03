@@ -43,11 +43,13 @@ class DashboardController extends Controller
 
         // Group by item type for "My Devices"
         $deviceGroups = $appliances
-            ->groupBy(fn($ua) => $ua->itemType->name)
-            ->map(fn($group, $type) => [
-                'name'  => $type,
-                'count' => $group->count(),
-            ])->values();
+                ->groupBy(fn($ua) => $ua->itemType->id)
+                ->map(fn($group, $itemTypeId) => [
+                    'id'    => (int) $itemTypeId,
+                    'name'  => $group->first()->itemType->name,
+                    'count' => $group->count(),
+                ])->values();
+
 
        
         $reminders = $appliances
