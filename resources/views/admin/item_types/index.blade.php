@@ -22,6 +22,7 @@
             <tr class="bg-gray-200 text-left">
                 <th class="p-3">#</th>
                 <th class="p-3">Name</th>
+                <th class="p-3">Photo</th>
                 <th class="p-3">Category</th>
                 <th class="p-3">Actions</th>
             </tr>
@@ -31,6 +32,15 @@
                 <tr class="border-t">
                     <td class="p-3">{{ $loop->iteration }}</td>
                     <td class="p-3">{{ $it->name }}</td>
+                    <td class="p-3">
+                        @if($it->icon_path)
+                            <img src="{{ asset($it->icon_path) }}" alt="icon" class="h-6 w-6 rounded">
+                        @else
+                            <div class="h-6 w-6 bg-gray-200 rounded flex items-center justify-center text-xs text-gray-500">
+                                N/A
+                            </div>
+                        @endif
+                    </td>
                     <td class="p-3">{{ $it->category->name }}</td>
                     <td class="p-3">
                         <a href="{{ route('item-types.edit', $it) }}" class="text-blue-600 mr-2">Edit</a>
